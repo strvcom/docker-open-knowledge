@@ -1,0 +1,16 @@
+# Garbage
+*.lerna_backup
+*.log
+*~
+*#
+.DS_Store
+
+# IDE stuff
+.netbeans
+nbproject
+.idea
+.node_history
+*.sublime-*
+*.atom-*
+.tern-*
+jsconfig.json
