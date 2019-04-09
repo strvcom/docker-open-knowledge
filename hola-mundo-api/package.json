@@ -1,0 +1,31 @@
+{
+  "name": "hola-mundo-api",
+  "description": "API server for Hola Mundo project",
+  "version": "1.0.0",
+  "author": "Martin Pirkl",
+  "scripts": {
+    "start": "node src/app",
+    "lint": "npx eslint ."
+  },
+  "dependencies": {
+    "koa": "^2.7.0"
+  },
+  "engines": {
+    "node": "^10.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@strv/eslint-config-node": "^0.1.1-alpha.0",
+    "eslint": "^5.13.0",
+    "jest": "^24.1.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "testRegex": "(/tests/.*\\.(test))\\.(js)$"
+  }
+}
