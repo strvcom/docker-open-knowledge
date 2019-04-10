@@ -110,3 +110,9 @@ docker history
 
 production and development build
 
+USER
+By default, root in a container is the same root (uid 0) as on the host machine. If a user manages to break out of an application running as root in a container, he may be able to gain access to the host with the same root user.
+
+In Dockerfiles, you can define CMD defaults that include an executable. For example:
+CMD ["executable","param1","param2"]
+NOTE: There can only be one CMD instruction in a Dockerfile. If you list more than one CMD, then only the last CMD will take effect.
