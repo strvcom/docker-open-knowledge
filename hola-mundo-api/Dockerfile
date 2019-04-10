@@ -1,6 +1,6 @@
 # ---- Base Node ----
 FROM node:dubnium AS base
-USER node
+# USER node
 # Create app directory
 WORKDIR /app
 
@@ -8,7 +8,7 @@ WORKDIR /app
 FROM base AS dependencies  
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # WORKDIR /app
-COPY ./hola-mundo-api/package*.json ./
+COPY ./package*.json ./
 # install app dependencies including 'devDependencies'
 RUN npm install
 
@@ -16,11 +16,11 @@ RUN npm install
 FROM dependencies AS build  
 # WORKDIR /app
 # source code
-COPY ./hola-mundo-api/src /app/src/
+COPY ./src /app/src/
 # tests
-COPY ./hola-mundo-api/tests /app/tests/
+COPY ./tests /app/tests/
 # linter
-COPY ./hola-mundo-api/.eslintrc.js /app
+COPY ./.eslintrc.js /app
 
 # --- Release with Alpine ----
 FROM node:10-alpine AS release  

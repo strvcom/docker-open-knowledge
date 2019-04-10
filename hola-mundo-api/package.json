@@ -3,6 +3,7 @@
   "description": "API server for Hola Mundo project",
   "version": "1.0.0",
   "author": "Martin Pirkl",
+  "repository": "https://github.com/strvcom/docker-workshop-2019",
   "scripts": {
     "start": "node src/app",
     "lint": "npx eslint ."
