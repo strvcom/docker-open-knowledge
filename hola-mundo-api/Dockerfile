@@ -1,6 +1,5 @@
 # ---- Base Node ----
 FROM node:dubnium AS base
-
 # Create app directory
 WORKDIR /app
 
