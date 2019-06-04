@@ -67,22 +67,6 @@ The Docker client and daemon can run on the same system, or you can connect a Do
 
 <img src="img/architecture.png" width="500" height="300" />
 
-### Hello world
-
-```
-docker run hello-world
-```
-
-[Hello world on DockerHub](https://hub.docker.com/_/hello-world)
-
-[Hello world source on GitHub](https://github.com/docker-library/hello-world/blob/master/hello.c)
-
-#### Docker Image
-An image is a read-only template with instructions for creating a Docker container
-
-#### Docker Container
-A container is an instance of an image
-
 #### The Docker daemon
 The Docker daemon listens for Docker API requests and manages Docker objects such as images, containers, networks, etc. A daemon can also communicate with other daemons.
 
@@ -102,12 +86,29 @@ The Docker client is the primary way that many Docker users interact with Docker
 docker
 ```
 
+#### Docker Image
+An image is a read-only template with instructions for creating a Docker container
+
+#### Docker Container
+A container is an instance of an image
+
 #### Docker registries
 A Docker registry stores Docker images. Docker Hub is official public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry.
 
 Docker Trusted Registry (DTR) - commercial product, complete image management workflow, featuring LDAP integration, image signing, security scanning etc.
 
 When you use the docker pull or docker run commands, the required images are pulled from your configured registry. When you use the docker push command, your image is pushed to your configured registry.
+
+
+### Hello world
+
+```
+docker run hello-world
+```
+
+[Hello world on DockerHub](https://hub.docker.com/_/hello-world)
+
+[Hello world source on GitHub](https://github.com/docker-library/hello-world/blob/master/hello.c)
 
 ### Building docker images
 
