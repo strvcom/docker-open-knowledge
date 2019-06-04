@@ -46,16 +46,13 @@ Popular container provider:
 
 ### Why Docker?
 
-Docker provides the ability to package and run an application in a loosely isolated environment called a container.
+Less overhead - applications are rapidly deployed, patched and scaled
 
-Docker provides fast and consistent delivery of your applications.
+Portability - apps deployed easily to multiple different operating systems and hardware platforms
 
-Docker provides tooling and a platform to manage the lifecycle of your containers in the same way:
+Consistent operations & environment - Docker provides tooling and a platform to manage the lifecycle of your containers in the same way, whether your environment is a local machine, in-house hosting or a cloud provider.
 
-* Application development and its supporting components
-* Application distribution and testing
-* Application deployment into production environment - this works in the same way whether your environment is a local machine, in-house hosting or a cloud provider
-
+Isolation - Docker provides the ability to package and run an application in a loosely isolated environment called a container.
 
 ### DOCKER ARCHITECTURE
 
@@ -108,6 +105,8 @@ docker
 #### Docker registries
 A Docker registry stores Docker images. Docker Hub is official public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry.
 
+Docker Trusted Registry (DTR) - commercial product, complete image management workflow, featuring LDAP integration, image signing, security scanning etc.
+
 When you use the docker pull or docker run commands, the required images are pulled from your configured registry. When you use the docker push command, your image is pushed to your configured registry.
 
 ### Building docker images
@@ -135,7 +134,7 @@ Now let's create a Dockerfile for our simple API server written in Node.js.
 
 ```
 # ---- Base Node ----
-FROM node:dubnium AS base
+FROM node:12 AS base
 # Create app directory
 WORKDIR /app
 
@@ -158,7 +157,7 @@ COPY ./tests /app/tests/
 COPY ./.eslintrc.js /app
 
 # --- Release with Alpine ----
-FROM node:10-alpine AS release  
+FROM node:12-slim AS release  
 # Create app directory
 WORKDIR /app
 # Change file owner of /app to non root user defined in base image
@@ -166,7 +165,7 @@ RUN chown -R node:node /app
 RUN chmod 755 /app
 # Switch to non root user defined in base image
 USER node
-COPY --from=dependencies /app/package.json ./
+COPY --from=dependencies /app/package*.json ./
 # Install app dependencies
 RUN npm install --only=production
 COPY --from=build /app ./
@@ -190,7 +189,7 @@ Runs command in a shell, which by default is `/bin/sh -c`
 By default, root in a container is the same root (uid 0) as on the host machine. If a user manages to break out of an application running as root in a container, he may be able to gain access to the host with the same root user.
 
 #### COPY
-Copies local files into the container.
+Copies local files into the container. Ignores files listed in .dockerignore
 
 #### CMD
 Default executable in the container.
@@ -203,3 +202,5 @@ docker build . -t hola-mundo-api
 ```
 
 Change something in `src/app.js` and run docker build again.
+
+### Push & Pull image from registry

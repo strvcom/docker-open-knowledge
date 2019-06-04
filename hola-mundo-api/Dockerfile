@@ -1,5 +1,5 @@
 # ---- Base Node ----
-FROM node:dubnium AS base
+FROM node:12 AS base
 # Create app directory
 WORKDIR /app
 
@@ -22,7 +22,7 @@ COPY ./tests /app/tests/
 COPY ./.eslintrc.js /app
 
 # --- Release with Alpine ----
-FROM node:10-alpine AS release  
+FROM node:12-slim AS release  
 # Create app directory
 WORKDIR /app
 # Change file owner of /app to non root user defined in base image
@@ -30,7 +30,7 @@ RUN chown -R node:node /app
 RUN chmod 755 /app
 # Switch to non root user defined in base image
 USER node
-COPY --from=dependencies /app/package.json ./
+COPY --from=dependencies /app/package*.json ./
 # Install app dependencies
 RUN npm install --only=production
 COPY --from=build /app ./
