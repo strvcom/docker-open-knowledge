@@ -1,5 +1,9 @@
+/* eslint-disable no-process-env */
 'use strict'
 
-const sendGreeting = () => 'Hola mundo!'
+const sendGreeting = () => ({
+  env: process.env.NODE_ENV,
+  message: 'Hola mundo!',
+})
 
 module.exports = sendGreeting

@@ -6,7 +6,8 @@
   "repository": "https://github.com/strvcom/docker-workshop-2019",
   "scripts": {
     "start": "node src/app",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "test": "npx jest"
   },
   "dependencies": {
     "koa": "^2.7.0"
@@ -16,9 +17,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@strv/eslint-config-node": "^0.1.1-alpha.0",
-    "eslint": "^5.13.0",
-    "jest": "^24.1.0"
+    "@strv/eslint-config-node": "^1.1.0",
+    "eslint": "^5.16.0",
+    "jest": "^24.8.0"
   },
   "jest": {
     "moduleFileExtensions": [

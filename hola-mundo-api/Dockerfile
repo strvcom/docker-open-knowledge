@@ -1,37 +1,34 @@
-# ---- Base Node ----
-FROM node:12 AS base
-# Create app directory
-WORKDIR /app
+FROM node:10-alpine as base
 
-# ---- Dependencies ----
-FROM base AS dependencies  
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# WORKDIR /app
-COPY ./package*.json ./
-# install app dependencies including 'devDependencies'
-RUN npm install
-
-# ---- Copy Files/Build ----
-FROM dependencies AS build  
-# WORKDIR /app
-# source code
-COPY ./src /app/src/
-# tests
-COPY ./tests /app/tests/
-# linter
-COPY ./.eslintrc.js /app
-
-# --- Release with Alpine ----
-FROM node:12-slim AS release  
-# Create app directory
-WORKDIR /app
-# Change file owner of /app to non root user defined in base image
-RUN chown -R node:node /app
-RUN chmod 755 /app
-# Switch to non root user defined in base image
+ENV NODE_ENV=production
+ENV HOME=/home/node
+ENV APP_DIR=${HOME}/app
+EXPOSE 3000
+RUN mkdir ${APP_DIR} && chown -R node:node ${APP_DIR}
+WORKDIR ${APP_DIR}
 USER node
-COPY --from=dependencies /app/package*.json ./
-# Install app dependencies
-RUN npm install --only=production
-COPY --from=build /app ./
+COPY --chown=node:node package*.json ./
+RUN npm ci && npm cache clean --force
+
+# TODO: Next session
+FROM base as dev
+
+CMD ["echo", "lol I do nothing, yet... :)"]
+
+FROM base as source
+
+COPY --chown=node:node . .
+
+# Intended to be called on a CI env
+FROM source as test
+
+ENV NODE_ENV=development
+ENV PATH ${APP_DIR}/node_modules/.bin:${PATH}
+RUN npm install --only=development
+COPY --from=dev ${APP_DIR}/node_modules ${APP_DIR}/node_modules
+RUN eslint .
+RUN jest
+CMD ["echo", "tests succeed!"]
+
+FROM source as prod
 CMD ["node", "src/app.js"]

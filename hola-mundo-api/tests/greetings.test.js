@@ -3,8 +3,10 @@
 
 const sendGreeting = require('../src/greetings')
 
-test('Tests greeting to equal "Hello world"', () => {
+test('Tests greeting to equal "Hola mundo!"', () => {
   const greeting = sendGreeting()
 
-  expect(greeting).toBe('Hello world')
+  expect(greeting).toMatchObject({
+    message: 'Hola mundo!',
+  })
 })
