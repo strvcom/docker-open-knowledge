@@ -3,3 +3,4 @@ coverage/
 .vscode
 .env
 .nyc_output/
+.db/data
