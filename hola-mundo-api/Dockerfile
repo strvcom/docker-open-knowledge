@@ -24,7 +24,6 @@ FROM source as test
 
 ENV NODE_ENV=development
 ENV PATH ${APP_DIR}/node_modules/.bin:${PATH}
-RUN npm install --only=development
 COPY --from=dev ${APP_DIR}/node_modules ${APP_DIR}/node_modules
 RUN eslint .
 RUN jest
