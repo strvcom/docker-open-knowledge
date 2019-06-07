@@ -1,0 +1,33 @@
+
+version: '2.4'
+
+services:
+  api:
+    build:
+      context: .
+      target: dev
+    image: hola-mundo-api:dev
+    container_name: hola-mundo-api
+    ports:
+      - "3000:3000"
+    environment:
+      POSTGRES_URL: "postgresql://postgres:postgres@db:5432/hola-mundo-db"
+      PORT: 3000
+    volumes:
+      - .:/home/node/app:delegated
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:10.6-alpine
+    container_name: hola-mundo-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: tmpfs
+        target: /var/lib/postgresql/data
+      - ./.db/initdb.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+      interval: 5s

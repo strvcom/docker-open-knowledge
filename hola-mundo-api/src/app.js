@@ -8,8 +8,8 @@ const { knex: db } = require('./database')
 
 const app = new Koa()
 
-app.use(ctx => {
-  ctx.body = sendGreeting()
+app.use(async ctx => {
+  ctx.body = await sendGreeting()
 })
 
 const port = process.env.PORT || 3000
