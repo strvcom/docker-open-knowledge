@@ -10,10 +10,11 @@ USER node
 COPY --chown=node:node package*.json ./
 RUN npm ci && npm cache clean --force
 
-# TODO: Next session
 FROM base as dev
-
-CMD ["echo", "lol I do nothing, yet... :)"]
+ENV NODE_ENV=development
+ENV PATH ${APP_DIR}/node_modules/.bin:${PATH}
+RUN npm install --only=development
+CMD ["nodemon", "src/app.js", "--inspect=0.0.0.0:9229"]
 
 FROM base as source
 
