@@ -10,7 +10,9 @@
     "test": "npx jest"
   },
   "dependencies": {
-    "koa": "^2.7.0"
+    "knex": "^0.17.3",
+    "koa": "^2.7.0",
+    "pg": "^7.11.0"
   },
   "engines": {
     "node": "^10.0.0"

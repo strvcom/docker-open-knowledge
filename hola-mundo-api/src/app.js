@@ -3,7 +3,8 @@
 'use strict'
 
 const Koa = require('koa')
-const sendGreeting = require('./greetings')
+const sendGreeting = require('./greetings.js')
+const { knex: db } = require('./database')
 
 const app = new Koa()
 
@@ -13,10 +14,19 @@ app.use(ctx => {
 
 const port = process.env.PORT || 3000
 
-app.listen(port, () => {
-  console.log(`==> 🌎 Server listening on port ${port}.`)
+const server = app.listen(port, async () => {
+  try {
+    await db.raw('select 1+1 as result')
+    console.log('==> 📑 DB connected and ready to be used.', new Date().toISOString())
+  } catch (err) {
+    console.error('Error connecting to DB ❌.', new Date().toISOString())
+    shutdown()
+  }
+
+  console.log(`==> 🌎 Server listening on port ${port}.`, new Date().toISOString())
 })
 
+// process signal management
 process.on('SIGINT', function onSigint() {
   console.info('Got SIGINT (aka ctrl-c in docker). Graceful shutdown ', new Date().toISOString())
   shutdown()
@@ -30,14 +40,16 @@ process.on('SIGTERM', function onSigterm() {
 
 // shut down server
 function shutdown() {
-  app.close(function onServerClosed(err) {
-    // Close DB connections
-    // Send FIN packages for long-lived HTTP connections
+  server.close(async function onServerClosed(err) {
     // 💥
+    console.log('HTTP server closed', new Date().toISOString())
+
+    await db.destroy()
+    console.log('Database connection closed', new Date().toISOString())
+
     if (err) {
       console.error(err)
-      process.exitCode = 1
+      process.exit(1)
     }
-    process.exit()
   })
 }
