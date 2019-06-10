@@ -14,7 +14,7 @@ services:
       POSTGRES_URL: "postgresql://postgres:postgres@db:5432/hola-mundo-db"
       PORT: 3000
     volumes:
-      - .:/home/node/app:delegated
+      - .:/app:delegated
     depends_on:
       db:
         condition: service_healthy
