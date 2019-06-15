@@ -1,0 +1,35 @@
+services:
+- docker
+
+env:
+  global:
+  - secure: cfuawPI3WuVP6fHHSmNK8S5MocJE7u75Nvl4gl+HZU+rmLDBEcOfpT1nNRIdRFLmfuMfDjpHW/W2jFBhKb4OB3xSwANVxqmvK8IHUf68TrDjugjxIG+F+z1VMNjDi3GZ/JdaWIIvuAaDuYflYg0IVSDEm7feO4xfpddTGqNwreaIa7WsghUO8qn/9QBmax9uBWxIiVtTbyYd8ilpxx9SxqMdujmUEtdcQm67uPZaAGXV1vZpidtVmt++zDUzVTHWC+QP34MPY6eI/+65WVpUzd3sIw0hWOxsgynxU9DBaBGTDGlByAXm/2X2+H+Dn15p2yqQ/Ql4vqrcCTapA4J4u+lFPMzdKyOnp/H7kJZwGymi14AHRaG+zGw9fPoiALUhlUzyiHU9mWPgx+nCtYpzF0/3bsC8HXXirjNoLeXjBYsVmwIQdg84tF4OJ3yYV25z8+vapivdhcN0T+TiK+POOWZHIIF3yH87QiZ7fN2NVWio86P10+4Y4+eVV1M2ErOVN3wLLnsC37HNbCSda1NpCTDp/rmGn12/vwbC4tVXE/2xTVVWOfgFl8TM8yDkJNS8/6XKlHiGe5RAQloyCWsGK4aGNnmYnHyA8xA03H2F8cU6qeg0X3ztmu1OW8FkgIF92HG6F/n9Sz1iThvbtwQyLFp/5ALLsk6+ICmXCT/Kzvk=
+
+matrix:
+  include:
+  # hola-mundo-api
+  - name: hola-mundo-api pipeline
+    language: node_js
+    node_js:
+    - 12
+    env:
+    - PACKAGE_LOCATION=hola-mundo-api
+    - HEROKU_APP_NAME=hola-mundo-api-dev
+    - HEROKU_PROC_NAME=web
+    - PROVIDER=heroku
+    before_script:
+    - cd $PACKAGE_LOCATION   
+    script:
+    # dev build & tests
+    - docker-compose up --build --no-start test-hola-mundo-api
+    - docker-compose run  test-hola-mundo-api ./node_modules/.bin/eslint .
+    - docker-compose run  test-hola-mundo-api ./node_modules/.bin/jest --runInBand --verbose --coverage -i
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: bash .travis/deploy.sh
+  on:
+    branch: master
+    condition: "$PROVIDER = heroku"
+
