@@ -20,15 +20,12 @@ matrix:
     before_script:
     - cd $PACKAGE_LOCATION   
     script:
-    # dev build & tests
-    - docker-compose up --build --no-start test-hola-mundo-api
-    - docker-compose run  test-hola-mundo-api ./node_modules/.bin/eslint .
-    - docker-compose run  test-hola-mundo-api ./node_modules/.bin/jest --runInBand --verbose --coverage -i
+      - docker build -t ${PACKAGE_LOCATION}:test --target test .
 
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash .travis/deploy.sh
+  script: bash ./deploy.sh
   on:
     branch: master
     condition: "$PROVIDER = heroku"
