@@ -3,7 +3,7 @@
 
 const sendGreeting = () => ({
   env: process.env.NODE_ENV,
-  message: 'Hola mundo!!',
+  message: 'Hola mundo!',
 })
 
 module.exports = sendGreeting
