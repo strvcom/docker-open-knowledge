@@ -25,7 +25,7 @@ matrix:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash ./deploy.sh
+  script: bash ./.ci/deploy.sh
   on:
     branch: master
     condition: "$PROVIDER = heroku"
