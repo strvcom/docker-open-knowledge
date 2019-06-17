@@ -11,7 +11,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      POSTGRES_URL: "postgresql://postgres:postgres@db:5432/hola-mundo-db"
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/hola-mundo-db"
       PORT: 3000
     volumes:
       - .:/app:delegated

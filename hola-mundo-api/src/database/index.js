@@ -5,7 +5,7 @@ const knex = require('knex')
 
 const dbConfig = {
   client: 'pg',
-  connection: process.env.POSTGRES_URL,
+  connection: process.env.DATABASE_URL,
 }
 
 const knexConnection = knex(dbConfig)
