@@ -16,6 +16,7 @@ matrix:
     - PACKAGE_LOCATION=hola-mundo-api
     - HEROKU_APP_NAME=hola-mundo-api-dev
     - HEROKU_PROC_NAME=web
+    - ECS_REPO=805382315593.dkr.ecr.us-east-1.amazonaws.com/api-default
     - PROVIDER=heroku
     before_script:
     - cd $PACKAGE_LOCATION   
@@ -28,4 +29,3 @@ deploy:
   script: bash ./.ci/deploy.sh
   on:
     branch: master
-    condition: "$PROVIDER = heroku"
