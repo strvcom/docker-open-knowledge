@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+exec docker run \
+  --rm \
+  --volume "${HOME}/.aws":/root/.aws \
+  --volume "$(pwd):/project" \
+  --env AWS_PROFILE="${AWS_PROFILE}" \
+  mesosphere/aws-cli "$@"

@@ -29,4 +29,3 @@ deploy:
   on:
     branch: master
     condition: "$PROVIDER = heroku"
-

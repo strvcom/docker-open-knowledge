@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# These variables will be sent to Docker as env vars -> required by terraform
+AWS_PROFILE=${AWS_PROFILE:-"playground"}
+
+exec docker run \
+  --name hola-mundo-api-terraform \
+  --interactive \
+  --tty \
+  --rm \
+  --workdir /mnt/terraform \
+  --volume "$(pwd)/.infra":/mnt/terraform \
+  --volume "${HOME}/.aws":/root/.aws \
+  --env AWS_PROFILE="${AWS_PROFILE}" \
+  --entrypoint terraform \
+  hashicorp/terraform:0.11.13 "${@}"
