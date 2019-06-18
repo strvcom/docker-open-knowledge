@@ -19,10 +19,9 @@ matrix:
     - HEROKU_PROC_NAME=web
     - ECS_REPO=805382315593.dkr.ecr.us-east-1.amazonaws.com/api-default
     - AWS_PROFILE=playground
-    - PROVIDER=heroku
     before_script:
       - cd $PACKAGE_LOCATION   
-      - ./.ci/before-install.sh
+      #- ./.ci/before-install.sh
     script:
       - docker build -t ${PACKAGE_LOCATION}:test --target test .
 
