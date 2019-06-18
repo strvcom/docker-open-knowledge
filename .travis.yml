@@ -4,6 +4,7 @@ services:
 env:
   global:
   - secure: FSQZIVgPk/IKVQbNqdly9hYkuvSxzgp7I4u9y7zddPqufrX01Q+t5hdmvWIcpGl7ZagrgrG0tiqaIead+2y3ZTZ2PdxJ/cduXxx01XcRESxHte9m+CuAVlRXuL1rpaQBhutPqScQI5/xhPsBUrJ4oVLEjgzbqB20Yu2eOwrphWSpxu7B2O9e5mQsIr6TrDZOjt0/ZLtt/5/Soh+9yPuO40YzUdqglwWjkxbogn2GDF2wwPi2tv+33wEPQtaOLU83EJQuDuEA8Gk9arV/G+di004ABYXhMgdg6jT77omhyNRQE0nqdjd1raLq1GSm0FaFg5ZB6O+GC9D6yFTNzfmyOCvKDNBtfgCbr/dgeW4Nsk0wpPohWMDBr38Hk+I9aEGZ5JAR3qqZq7AU+5Nw9Fge6R0NEFA0EsCMjs64JKjD4NG9TCAwPDsfPX9t8My6Z0vNGnAGUvY8FxJ5ryIWUG28D5Pc04HhtpGk5RBDhNFw+YioStmcSbQUakUvI+tNKnzeGHl7o2Ydeha58zuHmlka9250Ja3tXa3fXLATA4SYJaauipMtjNfo8Wt3h5cnk0auea70uX8jikD6bdnEulZke4fdLPaBbjRH8LxZbmoHUYtdFJiYunrmrB82sGEhHXpeJc81sqJtfEk9tKwFRBc4dqGNkxqYFXjt33I/xKsvZps=
+  - secure: cHq4/ycpbZymnf+bMavFOo92bU7zaKzN1JXAEa8tlAdS485zP8RIK2+PMTKkP+4gdBOMB5FxQ6U2F26QxufB3cazhMX9xwblTCmrdooqvO4SK1gMUct3EEcIe514NN6IefKCadeg0EcV+Wz5Gxe0wlZJ0NeyhF5VpyFkbmuhiNLiVp5gPT4rOOKnMSnh+xSIAhI/1ZOeA+ELZLFHmMLCrzgWsCJYCdBNP6EQ5kQTom+QIMKh0fHmhicx4AcCdsbCkYDJ6QfvD6sDhBXRJeDO4cw+nyN3FQUS0wXVfLBKrV1j5jq0oAxIyYiWQZOFrI/z+MeXoEfhT9heXwnP9HymbyeysRChAJVZXBTkPpQcxfVHCdAtPkmcIzv2hi5wfbA3gAm4VMN+hQRThDhnjGW8TObzpkEdX/+g3acxOGRwk68KGb94+cvhUEzqBSPuZh2V136NocVsMV58aCqaU5OZA29jeWFJntNCxUKf8pBGDv5kzBJDedXu3aS/X54CeBJMP3CoMCSt3xN20bTPgk7ppB9wRN+agoLC6aKgyBwoUXsiuiCdNUM2Gqv1RxLORTI07IYKw/NSqCtbZFGnXM+z1xYHyQrdxFqxFxDqKimzhtaR4i+0w0q2W0II3X7oS3+QcaxBZ0LJMb2FkRYpuSM20XJz0pej/kl5HjLoMY9M48Q=
 
 matrix:
   include:
@@ -17,9 +18,11 @@ matrix:
     - HEROKU_APP_NAME=hola-mundo-api-dev
     - HEROKU_PROC_NAME=web
     - ECS_REPO=805382315593.dkr.ecr.us-east-1.amazonaws.com/api-default
+    - AWS_PROFILE=playground
     - PROVIDER=heroku
     before_script:
-    - cd $PACKAGE_LOCATION   
+      - cd $PACKAGE_LOCATION   
+      - ./.ci/before-install.sh
     script:
       - docker build -t ${PACKAGE_LOCATION}:test --target test .
 
