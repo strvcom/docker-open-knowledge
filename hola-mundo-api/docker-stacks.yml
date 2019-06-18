@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  api:
+    image: hola-mundo-api:prod
+    ports:
+      - "3000:3000"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/hola-mundo-db"
+      PORT: 3000
+
+  db:
+    image: postgres:10.6-alpine
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./.db/initdb.d:/docker-entrypoint-initdb.d
+
+volumes:
+  db-data:
