@@ -21,7 +21,7 @@ matrix:
     - AWS_PROFILE=playground
     before_script:
       - cd $PACKAGE_LOCATION   
-      #- ./.ci/before-install.sh
+      - ./.ci/before-install.sh
     script:
       - docker build -t ${PACKAGE_LOCATION}:test --target test .
 
