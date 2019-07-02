@@ -2,7 +2,7 @@
 
 ### Container orchestration
 
-Container orchestration is all about managing the life cycles of containers, especially in large, dynamic environments. Software teams use container orchestration to control and automate many tasks:
+Container orchestration is all about managing the lifecycles of containers, especially in large, dynamic environments. Software teams use container orchestration to control and automate many tasks:
 
 * Provisioning and deployment of containers
 * Redundancy and availability of containers
@@ -149,3 +149,61 @@ docker push ${releasetag}
 ```
 
 ### Docker Swarm
+
+Docker Swarm (aka Swarm Mode) is a built-in orchestration cluster solution that helps us with:
+
+* Container automation lifecycle
+* Scale out/in/up/down containers
+* Re-creation of non-healthy containers
+* Updates without downtime (blue/green deploys)
+* Cross-node virtual networks
+
+Note: not to be confused with Swarm "classic" for pre-1.12 versions
+
+Not enabled by default. Here are a few new commands once it is enabled:
+
+- `docker swarm`
+- `docker node`
+- `docker service`
+- `docker stack`
+- `docker secret`
+
+The `docker stack` command is very important because it let us use Docker Compose files to generate a full "Stack" of services for a Docker Swarm cluster.
+
+For eg. this Compose file introduces new labels only used by `docker stack` command, such as the `deploy` section where we can configure update mechanism and placement constraints.
+
+```yml
+version: "3.7"
+
+services:
+  api:
+    image: hola-mundo-api:prod
+    ports:
+      - "3000:3000"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/hola-mundo-db"
+      PORT: 3000
+
+  db:
+    image: postgres:10.6-alpine
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./.db/initdb.d:/docker-entrypoint-initdb.d
+
+volumes:
+  db-data:
+```
+
+Notice that the version of the file need to be set as `3.X`, otherwise `docker stack` won't recognize the file.
