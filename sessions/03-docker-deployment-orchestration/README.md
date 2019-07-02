@@ -1,8 +1,8 @@
-# Session 3 - Docker deplyoment & orchestration 🐋
+# Session 3 - Docker deployment & orchestration 🐋
 
 ### Container orchestration
 
-Container orchestration is all about managing the lifecycles of containers, especially in large, dynamic environments. Software teams use container orchestration to control and automate many tasks:
+Container orchestration is all about managing the life cycles of containers, especially in large, dynamic environments. Software teams use container orchestration to control and automate many tasks:
 
 * Provisioning and deployment of containers
 * Redundancy and availability of containers
@@ -17,7 +17,7 @@ Container orchestration is all about managing the lifecycles of containers, espe
 
 Let's add a simple deployment pipeline defined in travis.yml to our app:
 
-```
+```yml
 services:
 - docker
 
@@ -52,21 +52,21 @@ deploy:
 Also we need to define few scripts:
 
 .ci/deploy.sh
-```
+```sh
 docker build -t $PACKAGE_LOCATION . --target prod
 bash ./.ci/heroku-deploy.sh $HEROKU_APP_NAME $HEROKU_PROC_NAME $PACKAGE_LOCATION
 bash ./.ci/heroku-release.sh $HEROKU_APP_NAME $HEROKU_PROC_NAME
 ```
 
 .ci/heroku-deploy.sh
-```
+```sh
 docker login -u _ -p "$HEROKU_TOKEN" registry.heroku.com
 docker tag $3:latest registry.heroku.com/$1/$2
 docker push registry.heroku.com/$1/$2
 ```
 
 .ci/heroku-release.sh
-```
+```sh
 imageId=$(docker inspect registry.heroku.com/$1/$2 --format={{.Id}})
 payload='{"updates":[{"type":"web","docker_image":"'"$imageId"'"}]}'
 curl -n -X PATCH https://api.heroku.com/apps/$1/formation \
@@ -80,7 +80,7 @@ curl -n -X PATCH https://api.heroku.com/apps/$1/formation \
 
 Let's modify the deployment pipeline for deployments to ECS:
 
-```
+```yml
 services:
 - docker
 
@@ -116,7 +116,7 @@ deploy:
 Also we need to define few scripts:
 
 .ci/before-install.sh
-```
+```sh
 set -o errexit
 set -o pipefail
 
@@ -125,13 +125,13 @@ mkdir -p ~/.aws && echo ${AWS_CREDENTIALS_FILE} | base64 -d > ~/.aws/credentials
 ```
 
 .ci/deploy.sh
-```
+```sh
 docker build -t $PACKAGE_LOCATION . --target prod
 bash ./.ci/ecs-deploy.sh $ECS_REPO $PACKAGE_LOCATION
 ```
 
 .ci/ecs-deploy.sh
-```
+```sh
 #!/usr/bin/env bash
 
 set -o errexit
