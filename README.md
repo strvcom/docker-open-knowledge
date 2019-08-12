@@ -3,15 +3,15 @@
 This repository serves as an online course for learning Docker. 
 Made by [STRV](https://www.strv.com/), it’s here to help those who want to use Docker for development as well as deployment.
 
-#### Goal
+### Goal
 
-To give you a fundamental understanding of what Docker is, and how to use it in your project for a development as well as for deployment.
+To give you a fundamental understanding of what Docker is, and how to use it in your project for development as well as for deployment.
 
-#### Source
+### Source
 
 This online course was created by utilizing material from an **internal workshop held at [STRV](https://www.strv.com/)**.
 
-#### Prerequisites
+### Prerequisites
 
 This course requires at least basic knowledge of backend development.
 
@@ -19,9 +19,9 @@ This course requires at least basic knowledge of backend development.
 
 This course contains 3 sessions (recordings).
 
-1. [Docker basics](./sessions/01-docker-basics/)
+1. [Docker Basics](./sessions/01-docker-basics/)
     - Virtual Machines vs Containerization
-    - What's Docker?
+    - What is Docker?
     - Docker Architecture
     - Hello World in Docker
     - Building Docker Images
@@ -36,7 +36,7 @@ This course contains 3 sessions (recordings).
     - AWS ECS
     - Docker Swarm
 
-## Video recordings
+## Video Recordings
 
 Sessions: 
 1. [Docker basics](https://www.youtube.com/watch?v=YMFXf_F094E&list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3)
@@ -47,13 +47,12 @@ Playlist:
 
 [https://www.youtube.com/playlist?list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3](https://www.youtube.com/playlist?list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3)
 
-## Used technologies
+## Used Technologies
 
 - [Docker](https://www.docker.com/)
 - [Heroku](https://www.heroku.com/)
 - [AWS - ECS](https://aws.amazon.com/)
 
-#### Speakers
+## Speakers
 - [Martin Pirkl](https://github.com/pirklmar)
 - [Juan Sanchez](https://github.com/jlsan92)
-

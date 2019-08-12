@@ -1,6 +1,6 @@
-# Session 3 - Docker deplyoment & orchestration 🐋
+# Session 3 - Docker Deployment & Orchestration 🐋
 
-### Container orchestration
+### Container Orchestration
 
 Container orchestration is all about managing the lifecycles of containers, especially in large, dynamic environments. Software teams use container orchestration to control and automate many tasks:
 
@@ -13,7 +13,7 @@ Container orchestration is all about managing the lifecycles of containers, espe
 * Load balancing of service discovery between containers
 * Health monitoring of containers and hosts
 
-### Deployment pipeline with Travis, Docker and Heroku
+### Deployment Pipeline with Travis, Docker and Heroku
 
 Let's add a simple deployment pipeline defined in travis.yml to our app:
 
@@ -49,7 +49,7 @@ deploy:
     branch: master
 ```
 
-Also we need to define few scripts:
+We also need to define a few scripts:
 
 .ci/deploy.sh
 ```
@@ -76,7 +76,7 @@ curl -n -X PATCH https://api.heroku.com/apps/$1/formation \
 -H "Authorization: Bearer $HEROKU_TOKEN"
 ```
 
-### Deployment pipeline with Travis, Docker and ECS
+### Deployment Pipeline with Travis, Docker and ECS
 
 Let's modify the deployment pipeline for deployments to ECS:
 
@@ -113,7 +113,7 @@ deploy:
     branch: master
 ```
 
-Also we need to define few scripts:
+Also, we need to define a few scripts:
 
 .ci/before-install.sh
 ```
