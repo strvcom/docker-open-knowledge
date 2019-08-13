@@ -39,7 +39,7 @@ This course contains 3 sessions (recordings).
 ## Video Recordings
 
 Sessions: 
-1. [Docker basics](https://www.youtube.com/watch?v=YMFXf_F094E&list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3)
+1. [Docker Basics](https://www.youtube.com/watch?v=YMFXf_F094E&list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3)
 2. [Docker for Development](https://www.youtube.com/watch?v=j8LSDmrL50w&list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3)
 3. [Docker for Deployments](https://www.youtube.com/watch?v=-dPjjPvdT6g&list=PLH7l6h4alq1NCndV79cPqjBRIKk8ZopE3)
 
